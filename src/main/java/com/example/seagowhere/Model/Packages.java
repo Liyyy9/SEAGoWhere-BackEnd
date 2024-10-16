@@ -83,4 +83,40 @@ public class Packages {
     )
     private String image_url;
 
+    @Column
+    @NotBlank(message = "Image 1 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_1;
+
+    @Column
+    @NotBlank(message = "Image 2 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_2;
+
+    @Column
+    @NotBlank(message = "Image 3 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_3;
+
+    @Column
+    @NotBlank(message = "Image 4 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_4;
+
 }
