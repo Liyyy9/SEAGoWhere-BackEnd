@@ -49,7 +49,6 @@ public class BookingController{
         booking.setPassportNo(bookingDetails.getPassportNo());
         booking.setPassportExp(bookingDetails.getPassportExp());
         booking.setAPackage(bookingDetails.getAPackage());
-        booking.setUser(bookingDetails.getUser());
 
         Booking updatedBooking = bookingService.updateBooking(bookingId, booking);
         return new ResponseEntity<>(updatedBooking, HttpStatus.OK);

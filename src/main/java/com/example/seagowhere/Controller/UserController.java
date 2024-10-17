@@ -1,7 +1,7 @@
 package com.example.seagowhere.Controller;
 
 import com.example.seagowhere.Exception.ResourceNotFoundException;
-import com.example.seagowhere.Model.User;
+import com.example.seagowhere.Model.Users;
 import com.example.seagowhere.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,46 +19,46 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable(value = "id") Integer userId) {
-        User user = userService.getUserById(userId)
+    public ResponseEntity<Users> getUserById(@PathVariable(value = "id") Integer userId) {
+        Users users = userService.getUserById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User newUser = userService.createUser(user);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    public ResponseEntity<Users> createUser(@Valid @RequestBody Users users) {
+        Users newUsers = userService.createUser(users);
+        return new ResponseEntity<>(newUsers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@Valid @PathVariable(value = "id") Integer userId,
-                                           @RequestBody User userDetails) {
-        User updatedUser = userService.updateUser(userId, userDetails);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    public ResponseEntity<Users> updateUser(@Valid @PathVariable(value = "id") Integer userId,
+                                            @RequestBody Users usersDetails) {
+        Users updatedUsers = userService.updateUser(userId, usersDetails);
+        return new ResponseEntity<>(updatedUsers, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Integer userId) {
-        User checkUser = userService.getUserById(userId).map(user -> {
-            userService.deleteUser(user.getUserId());
+        Users checkUsers = userService.getUserById(userId).map(user -> {
+            userService.deleteUser(user.getId());
             return user;
         }).orElseThrow(() -> new ResourceNotFoundException());
 
-        String response = String.format("User %s deleted successfully", checkUser.getUsername());
+        String response = String.format("Users %s deleted successfully", checkUsers.getUsername());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/email")
-    public ResponseEntity<User> getUserByEmail(@RequestParam(value = "email") String email) {
-        User user = userService.getUserByEmail(email)
+    public ResponseEntity<Users> getUserByEmail(@RequestParam(value = "email") String email) {
+        Users users = userService.getUserByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException());
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

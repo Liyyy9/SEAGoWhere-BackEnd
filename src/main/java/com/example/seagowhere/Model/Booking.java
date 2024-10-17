@@ -18,11 +18,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookingId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private Users users;
 
-    @ManyToOne
+
     @JoinColumn(name = "package_id", nullable = false)
     private Package aPackage;
 

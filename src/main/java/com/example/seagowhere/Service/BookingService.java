@@ -35,7 +35,6 @@ public class BookingService {
             booking.setPassportNo(bookingDetails.getPassportNo());
             booking.setPassportExp(bookingDetails.getPassportExp());
             booking.setAPackage(bookingDetails.getAPackage());
-            booking.setUser(bookingDetails.getUser());
             return bookingRepository.save(booking);
         }).orElseThrow(() -> new ResourceNotFoundException("Booking not found with id " + bookingId));
     }

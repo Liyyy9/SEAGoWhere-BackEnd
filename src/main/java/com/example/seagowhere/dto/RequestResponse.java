@@ -1,12 +1,10 @@
 package com.example.seagowhere.dto;
 
 import com.example.seagowhere.Model.EnumRole;
-import com.example.seagowhere.Model.User;
+import com.example.seagowhere.Model.Users;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true) // ignore any properties in JSON input that are not bound to any fields during deserialization.
@@ -17,10 +15,11 @@ public class RequestResponse {
     private String token;
     private String refreshToken;
     private String expirationTime;
-    private String name;
-    private String email;
-    private EnumRole role;
-    private String password;
-    private User users;
+    private String firstName; // done
+    private String lastName; // done
+    private String email; // done
+    private EnumRole role; // done
+    private String password; // done
+    private Users users;
 
 }

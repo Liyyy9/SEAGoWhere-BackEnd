@@ -1,7 +1,7 @@
 package com.example.seagowhere.Service;
 
 import com.example.seagowhere.Exception.ResourceNotFoundException;
-import com.example.seagowhere.Model.User;
+import com.example.seagowhere.Model.Users;
 import com.example.seagowhere.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,40 +18,39 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Integer userId) {
+    public Optional<Users> getUserById(Integer userId) {
         return userRepository.findById(userId);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public Users createUser(Users users) {
+        return userRepository.save(users);
     }
 
-    public User updateUser(Integer userId, User userDetails) {
+    public Users updateUser(Integer userId, Users usersDetails) {
         return userRepository.findById(userId).map(user -> {
-            user.setUserName(userDetails.getUsername());
-            user.setFirstName(userDetails.getFirstName());
-            user.setLastName(userDetails.getLastName());
-            user.setEmail(userDetails.getEmail());
-            user.setPassword(userDetails.getPassword());
+            user.setFirstName(usersDetails.getFirstName());
+            user.setLastName(usersDetails.getLastName());
+            user.setEmail(usersDetails.getEmail());
+            user.setPassword(usersDetails.getPassword());
             return userRepository.save(user);
-        }).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
+        }).orElseThrow(() -> new ResourceNotFoundException("Users not found with id " + userId));
     }
 
     public void deleteUser(Integer userId) {
         userRepository.deleteById(userId);
     }
 
-    public Optional<User> getUserByEmail(String email) {
+    public Optional<Users> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Users not found with email: " + username));
     }
 }
