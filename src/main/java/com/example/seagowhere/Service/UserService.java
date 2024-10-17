@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
 
     public User updateUser(Integer userId, User userDetails) {
         return userRepository.findById(userId).map(user -> {
-            user.setUserName(userDetails.getUserName());
+            user.setUserName(userDetails.getUsername());
             user.setFirstName(userDetails.getFirstName());
             user.setLastName(userDetails.getLastName());
             user.setEmail(userDetails.getEmail());
@@ -55,4 +55,3 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
 }
-

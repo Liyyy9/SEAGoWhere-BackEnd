@@ -50,7 +50,7 @@ public class UserController {
             return user;
         }).orElseThrow(() -> new ResourceNotFoundException());
 
-        String response = String.format("User %s deleted successfully", checkUser.getUserName());
+        String response = String.format("User %s deleted successfully", checkUser.getUsername());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
