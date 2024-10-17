@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,13 +44,18 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
 
-    @NotBlank(message = "Password cannot be blank" )
+    @NotBlank(message = "Password cannot be blank")
     @Column(name = "password", nullable = false, length = 128)
     private String password;
 
-    @Column(name="role", nullable = false)
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Role cannot be blank.")
     private EnumRole role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
+    }
 
 }
