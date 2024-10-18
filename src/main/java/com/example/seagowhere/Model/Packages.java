@@ -2,6 +2,7 @@ package com.example.seagowhere.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +18,7 @@ import org.aspectj.lang.annotation.After;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,16 +26,18 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "packages")
 public class Packages {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "package_id")
+    //@Column(name = "package_id")
     private Long id;
 
     @NotNull(message = "Category Id cannot be blank.")
     @ManyToOne(cascade =  CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false, name = "category_id")
+    //@JsonIgnore
     private Category category;
 
     @Column(nullable = false, name = "package_name")
