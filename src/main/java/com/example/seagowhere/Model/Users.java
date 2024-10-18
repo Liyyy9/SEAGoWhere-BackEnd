@@ -45,6 +45,7 @@ public class Users implements UserDetails {
     @NotNull(message = "Role cannot be blank.")
     private EnumRole role;
 
+    //to be confirmed for deletion
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 //    @JoinColumn(name = "booking_id")
 //    @JsonIgnore
