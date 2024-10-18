@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/packages")
 @CrossOrigin("*")
 public class PackagesController {
 
@@ -25,20 +24,22 @@ public class PackagesController {
     }
 
     // Create a new package
+    @RequestMapping("/admin/api/packages")
     @PostMapping
     public ResponseEntity<Object> createPackage(@Valid @RequestBody Packages packages){
         return new ResponseEntity<>(packagesService.save(packages), HttpStatus.CREATED);
     }
 
-    // Read
-        // Get a package by id
-    @GetMapping("/{id}")
+    // Get a package by id
+    //@RequestMapping("/public/api/packages")
+    @GetMapping("/public/api/packages/{id}")
     public ResponseEntity<Object> getPackageById(@PathVariable Long id) {
         Packages packages = packagesService.findById(id).orElseThrow(()-> new ResourceNotFoundException());
         return new ResponseEntity<>(packages, HttpStatus.OK);
     }
 
-        // Retrieve all packages
+    // Retrieve all packages
+    @RequestMapping("/public/api/packages")
     @GetMapping
     public ResponseEntity<Object> getAllPackages() {
         List<Packages> packagesList = packagesService.findAllPackages();
@@ -47,8 +48,9 @@ public class PackagesController {
         return new ResponseEntity<>(packagesList, HttpStatus.OK);
     }
 
-        // Get package with PAGINATION
-    @GetMapping("/listing")
+    // Get package with PAGINATION
+    //@RequestMapping("/public/api/packages")
+    @GetMapping("/public/api/packages/listing")
     public ResponseEntity<Object> getPackagesWithPagination (
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "6") int perPage
@@ -56,8 +58,9 @@ public class PackagesController {
         return new ResponseEntity<>(packagesService.findWithPagination(page, perPage), HttpStatus.OK);
     }
 
-        // Get a package by category id
-    @GetMapping("/category/{categoryId}")
+    // Get a package by category id
+    //@RequestMapping("/public/api/packages")
+    @GetMapping("/public/api/packages/category/{categoryId}")
     public ResponseEntity<Object> getPackagesByCategoryId (@PathVariable Long categoryId){
         List<Packages> packages = packagesService.getPackagesByCategoryId(categoryId);
         if (packages.isEmpty()) throw new ResourceNotFoundException();
@@ -66,7 +69,8 @@ public class PackagesController {
     }
 
     // Update a package
-    @PutMapping("/{id}")
+    //@RequestMapping("/admin/api/packages")
+    @PutMapping("/admin/api/packages/{id}")
     public ResponseEntity<Object> updatePackage(@PathVariable Long id, @Valid @RequestBody Packages packageDetails) {
 
         Packages checkPackage = packagesService.findById(id).map(_package -> {
@@ -84,6 +88,10 @@ public class PackagesController {
           _package.setNo_of_days(packageDetails.getNo_of_days());
           _package.setNo_of_nights(packageDetails.getNo_of_nights());
           _package.setImage_url(packageDetails.getImage_url());
+          _package.setImage_1(packageDetails.getImage_1());
+          _package.setImage_2(packageDetails.getImage_2());
+          _package.setImage_3(packageDetails.getImage_3());
+          _package.setImage_4(packageDetails.getImage_4());
           return packagesService.save(_package);
         }).orElseThrow(()-> new ResourceNotFoundException());
 
@@ -91,7 +99,8 @@ public class PackagesController {
     }
 
     // Delete a package
-    @DeleteMapping("/{id}")
+    //@RequestMapping("/admin/api/packages")
+    @DeleteMapping("/admin/api/packages/{id}")
     public ResponseEntity<Object> deletePackage(@PathVariable Long id) {
         Packages checkPackages = packagesService.findById(id).map(_packages -> {
             packagesService.deleteById(_packages.getId());

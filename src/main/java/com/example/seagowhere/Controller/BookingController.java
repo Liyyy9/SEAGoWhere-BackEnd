@@ -3,11 +3,16 @@ package com.example.seagowhere.Controller;
 
 import com.example.seagowhere.Exception.ResourceNotFoundException;
 import com.example.seagowhere.Model.Bookings;
+import com.example.seagowhere.Model.Users;
+import com.example.seagowhere.Repository.UserRepository;
 import com.example.seagowhere.Service.BookingService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,10 +29,12 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
+
     // Create a new booking
     @PostMapping("/{id}")
     public ResponseEntity<Object> createBooking(@PathVariable("id") Long packageId, @Valid @RequestBody Bookings booking) {
         return new ResponseEntity<>(bookingService.createBooking(packageId, booking), HttpStatus.CREATED);
+
     }
 
     // Get a booking by id

@@ -28,8 +28,8 @@ public class Category {
     @NotBlank(message = "Category name cannot be blank.")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.MERGE)
-    @JsonIgnore
-    private List<Packages> packagesList;
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "category", cascade = CascadeType.MERGE)
+    //@JsonIgnore
+    //private List<Packages> packagesList;
 
 }

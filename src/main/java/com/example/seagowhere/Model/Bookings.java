@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -26,10 +27,9 @@ public class Bookings {
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    @OneToOne
-    //@NotNull(message = "Package id cannot be blank.")
-    @JoinColumn(nullable = false, name = "package_id")
-    private Packages packages;    // (OneToOne) FK to package table
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "packages_id")
+    private Packages packages;
 
     @Column
     private String title;
@@ -45,7 +45,7 @@ public class Bookings {
     @NotNull
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date dob;
+    private LocalDate dob;
 
     @NotBlank
     @Column(nullable = false)
@@ -54,6 +54,6 @@ public class Bookings {
     @NotNull
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date passportExp;
+    private LocalDate passportExp;
 
 }

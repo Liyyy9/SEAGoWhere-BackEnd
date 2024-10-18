@@ -2,6 +2,7 @@ package com.example.seagowhere.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +18,7 @@ import org.aspectj.lang.annotation.After;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Builder
@@ -24,7 +26,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "package")
+@Table(name = "packages")
 public class Packages {
 
     @Id
@@ -35,6 +37,7 @@ public class Packages {
     @NotNull(message = "Category Id cannot be blank.")
     @ManyToOne(cascade =  CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false, name = "category_id")
+    //@JsonIgnore
     private Category category;
 
     @Column(nullable = false, name = "package_name")
@@ -83,5 +86,41 @@ public class Packages {
             message = "Please use a valid image (.jpg, .jpeg, .png)."
     )
     private String image_url;
+
+    @Column
+    @NotBlank(message = "Image 1 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_1;
+
+    @Column
+    @NotBlank(message = "Image 2 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_2;
+
+    @Column
+    @NotBlank(message = "Image 3 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_3;
+
+    @Column
+    @NotBlank(message = "Image 4 URL cannot be blank")
+    @Size(max = 255, message = "Image URL must be less than 255 characters.")
+    @Pattern(
+            regexp = "([^\s]+(\\.(?i)(jpg|jpeg|png))$)",
+            message = "Please use a valid image (.jpg, .jpeg, .png)."
+    )
+    private String image_4;
 
 }
