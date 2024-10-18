@@ -45,11 +45,11 @@ public class Users implements UserDetails {
     @NotNull(message = "Role cannot be blank.")
     private EnumRole role;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-//    @JoinColumn(name = "booking_id")
-//    @JsonIgnore
-//    @OrderBy("name ASC")    // default order is ASC, changeable to DESC
-//    private List<Booking> bookings;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "booking_id")
+    @JsonIgnore
+    @OrderBy("name ASC")    // default order is ASC, changeable to DESC
+    private List<Bookings> bookings;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

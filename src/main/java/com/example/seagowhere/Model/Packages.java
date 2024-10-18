@@ -24,11 +24,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "package")
 public class Packages {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "package_id")
+    //@Column(name = "package_id")
     private Long id;
 
     @NotNull(message = "Category Id cannot be blank.")

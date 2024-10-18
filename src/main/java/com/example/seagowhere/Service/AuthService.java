@@ -37,6 +37,7 @@ public class AuthService {
         Users users = new Users();
 
         users.setFirstName(registrationRequest.getFirstName());
+        users.setLastName(registrationRequest.getLastName());
 
         users.setEmail(registrationRequest.getEmail());
 
@@ -85,6 +86,7 @@ public class AuthService {
         Users usersResult = userRepository.findByEmail(userName).orElseThrow(()->new ResourceNotFoundException());
 
         usersResult.setFirstName(updateRequest.getFirstName());
+        usersResult.setLastName(updateRequest.getLastName());
         usersResult.setEmail(updateRequest.getEmail());
 
         if (updateRequest.getPassword() == null || updateRequest.getPassword().isEmpty())
@@ -150,6 +152,7 @@ public class AuthService {
 
         RequestResponse requestResponse = new RequestResponse();
         requestResponse.setFirstName(users.getFirstName());
+        requestResponse.setLastName(users.getLastName());
         requestResponse.setEmail(users.getEmail());
         requestResponse.setPassword(users.getPassword());
         requestResponse.setRole(users.getRole());
