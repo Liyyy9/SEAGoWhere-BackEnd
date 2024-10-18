@@ -88,21 +88,12 @@ public class PackagesController {
           _package.setNo_of_days(packageDetails.getNo_of_days());
           _package.setNo_of_nights(packageDetails.getNo_of_nights());
           _package.setImage_url(packageDetails.getImage_url());
-<<<<<<< HEAD
           _package.setImage_1(packageDetails.getImage_1());
           _package.setImage_2(packageDetails.getImage_2());
           _package.setImage_3(packageDetails.getImage_3());
           _package.setImage_4(packageDetails.getImage_4());
             return packagesService.save(_package);
-||||||| d179021
-          return packagesService.save(_package);
-=======
-          _package.setImage_1(packageDetails.getImage_1());
-          _package.setImage_2(packageDetails.getImage_2());
-          _package.setImage_3(packageDetails.getImage_3());
-          _package.setImage_4(packageDetails.getImage_4());
-          return packagesService.save(_package);
->>>>>>> 339b26f874f1a2fec2a68544c815c0633b4e5d06
+
         }).orElseThrow(()-> new ResourceNotFoundException());
 
         return new ResponseEntity<>(checkPackage, HttpStatus.OK);
