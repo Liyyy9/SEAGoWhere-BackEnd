@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -28,8 +29,16 @@ public class JWTUtils {
     }
 
     // takes in the user's details to generate the JWT token with an expiration duration of 24 hours
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails, String firstName, String lastName, String email){
+        Map<String, Object> claims = new HashMap<>();
+
+        // Add custom claims for firstName, lastName, and email
+        claims.put("firstName", firstName);
+        claims.put("lastName", lastName);
+        claims.put("email", email);
+
         return Jwts.builder()
+                .claims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
@@ -58,6 +67,21 @@ public class JWTUtils {
     // the token is the payload containing user information (e.g. email, expirationTime)
     public String extractUsername(String token){
         return extractClaims(token, Claims::getSubject);
+    }
+
+    // Extract email from the token
+    public String extractEmail(String token) {
+        return extractClaims(token, claims -> claims.get("email", String.class));
+    }
+
+    // Extract firstName from the token
+    public String extractFirstName(String token) {
+        return extractClaims(token, claims -> claims.get("firstName", String.class));
+    }
+
+    // Extract lastName from the token
+    public String extractLastName(String token) {
+        return extractClaims(token, claims -> claims.get("lastName", String.class));
     }
 
     // this generic method, represented by <T> returns a generic type as well T
