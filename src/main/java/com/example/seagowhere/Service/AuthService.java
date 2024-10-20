@@ -65,7 +65,11 @@ public class AuthService {
 
         var user = userRepository.findByEmail(signinRequest.getEmail()).orElseThrow();
 
-        var jwt = jwtUtils.generateToken(user);
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String email = user.getEmail();
+
+        var jwt = jwtUtils.generateToken(user, firstName, lastName, email);
 
         var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
 
@@ -100,7 +104,7 @@ public class AuthService {
 
             requestResponse.setUsers(updatedPersonnel);
 
-            var jwt = jwtUtils.generateToken(updatedPersonnel);
+            var jwt = jwtUtils.generateToken(updatedPersonnel, updatedPersonnel.getFirstName(), updatedPersonnel.getLastName(), updatedPersonnel.getEmail());
 
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), updatedPersonnel);
 
@@ -128,7 +132,7 @@ public class AuthService {
         Users users = userRepository.findByEmail(ourEmail).orElseThrow();
 
         if (jwtUtils.isTokenValid(refreshTokenRequest.getToken(), users)) {
-            var jwt = jwtUtils.generateToken(users);
+            var jwt = jwtUtils.generateToken(users, users.getFirstName(), users.getLastName(), users.getEmail());
             requestResponse.setToken(jwt);
             requestResponse.setRefreshToken(refreshTokenRequest.getToken());
             requestResponse.setExpirationTime("24Hr");
