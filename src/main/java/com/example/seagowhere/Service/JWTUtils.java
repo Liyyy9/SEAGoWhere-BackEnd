@@ -29,13 +29,14 @@ public class JWTUtils {
     }
 
     // takes in the user's details to generate the JWT token with an expiration duration of 24 hours
-    public String generateToken(UserDetails userDetails, String firstName, String lastName, String email){
+    public String generateToken(UserDetails userDetails, String firstName, String lastName, String email, String number){
         Map<String, Object> claims = new HashMap<>();
 
         // Add custom claims for firstName, lastName, and email
         claims.put("firstName", firstName);
         claims.put("lastName", lastName);
         claims.put("email", email);
+        claims.put("number", number);
 
         return Jwts.builder()
                 .claims(claims)
@@ -82,6 +83,11 @@ public class JWTUtils {
     // Extract lastName from the token
     public String extractLastName(String token) {
         return extractClaims(token, claims -> claims.get("lastName", String.class));
+    }
+
+    // Extract number from the token
+    public String extractNumber(String token) {
+        return extractClaims(token, claims -> claims.get("number", String.class));
     }
 
     // this generic method, represented by <T> returns a generic type as well T

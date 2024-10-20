@@ -36,6 +36,11 @@ public class Users implements UserDetails {
     @Column(name = "email", unique = true)
     private String email;
 
+    @NotBlank
+    @Column(name = "number", unique = true)
+    @Size(max = 8, message = "Mobile number cannot have more than eight numbers")
+    private String number;
+
     @NotBlank(message = "Password cannot be blank")
     @Column(name = "password", nullable = false)
     private String password;

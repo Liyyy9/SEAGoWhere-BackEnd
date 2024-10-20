@@ -35,6 +35,7 @@ public class UserService implements UserDetailsService {
             user.setFirstName(usersDetails.getFirstName());
             user.setLastName(usersDetails.getLastName());
             user.setEmail(usersDetails.getEmail());
+            user.setNumber(usersDetails.getNumber());
             user.setPassword(usersDetails.getPassword());
             return userRepository.save(user);
         }).orElseThrow(() -> new ResourceNotFoundException("Users not found with id " + userId));
