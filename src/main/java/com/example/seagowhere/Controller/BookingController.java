@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +25,12 @@ import java.util.List;
 public class BookingController {
 
     private final BookingService bookingService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public BookingController(BookingService bookingService) {
+    public BookingController(BookingService bookingService, UserRepository userRepository) {
         this.bookingService = bookingService;
+        this.userRepository = userRepository;
     }
 
 
@@ -72,5 +76,20 @@ public class BookingController {
 
         String response = String.format("Booking '%s' has been successfully deleted.", deletedBooking.getTitle());
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    // Get bookings by user id
+    @GetMapping("/user")
+    public ResponseEntity<Object> getUserBookings(@AuthenticationPrincipal UserDetails userDetails){
+        String email = userDetails.getUsername();
+        Users currentUser = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
+        List<Bookings> userBookings = bookingService.getBookingsByUserId(currentUser.getId());
+
+        if (userBookings.isEmpty()){
+            throw new ResourceNotFoundException("No bookings found for user.");
+        }
+
+        return new ResponseEntity<>(userBookings, HttpStatus.OK);
     }
 }
