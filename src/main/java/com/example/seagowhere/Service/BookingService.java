@@ -68,4 +68,7 @@ public class BookingService {
         bookingRepository.deleteById(bookingId);
     }
 
+    public List<Bookings> getBookingsByUserId(Integer userId){
+        return bookingRepository.findBookingByUserId(Long.valueOf(userId));
+    }
 }
