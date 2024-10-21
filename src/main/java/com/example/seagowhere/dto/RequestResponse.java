@@ -20,6 +20,7 @@ public class RequestResponse {
     private String email; // done
     private EnumRole role; // done
     private String password; // done
+    private String number;
     private Users users;
 
 }

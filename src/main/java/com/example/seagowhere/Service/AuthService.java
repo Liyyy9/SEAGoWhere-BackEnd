@@ -38,7 +38,7 @@ public class AuthService {
 
         users.setFirstName(registrationRequest.getFirstName());
         users.setLastName(registrationRequest.getLastName());
-
+        users.setNumber(registrationRequest.getNumber());
         users.setEmail(registrationRequest.getEmail());
 
         if(registrationRequest.getPassword().isBlank())
@@ -68,8 +68,9 @@ public class AuthService {
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
         String email = user.getEmail();
+        String number = user.getNumber();
 
-        var jwt = jwtUtils.generateToken(user, firstName, lastName, email);
+        var jwt = jwtUtils.generateToken(user, firstName, lastName, email, number);
 
         var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
 
@@ -104,7 +105,7 @@ public class AuthService {
 
             requestResponse.setUsers(updatedPersonnel);
 
-            var jwt = jwtUtils.generateToken(updatedPersonnel, updatedPersonnel.getFirstName(), updatedPersonnel.getLastName(), updatedPersonnel.getEmail());
+            var jwt = jwtUtils.generateToken(updatedPersonnel, updatedPersonnel.getFirstName(), updatedPersonnel.getLastName(), updatedPersonnel.getEmail(), updatedPersonnel.getNumber());
 
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), updatedPersonnel);
 
@@ -132,7 +133,7 @@ public class AuthService {
         Users users = userRepository.findByEmail(ourEmail).orElseThrow();
 
         if (jwtUtils.isTokenValid(refreshTokenRequest.getToken(), users)) {
-            var jwt = jwtUtils.generateToken(users, users.getFirstName(), users.getLastName(), users.getEmail());
+            var jwt = jwtUtils.generateToken(users, users.getFirstName(), users.getLastName(), users.getEmail(), users.getNumber());
             requestResponse.setToken(jwt);
             requestResponse.setRefreshToken(refreshTokenRequest.getToken());
             requestResponse.setExpirationTime("24Hr");
@@ -158,6 +159,7 @@ public class AuthService {
         requestResponse.setFirstName(users.getFirstName());
         requestResponse.setLastName(users.getLastName());
         requestResponse.setEmail(users.getEmail());
+        requestResponse.setNumber(users.getNumber());
         requestResponse.setPassword(users.getPassword());
         requestResponse.setRole(users.getRole());
 
