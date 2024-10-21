@@ -8,7 +8,7 @@
 
 <!-- PROJECT LOGO/TITLE -->
 <div align="center">
-        <img src="img/logo2-transparent.png" alt="Logo" width="150">
+        <img src="logo2-transparent.png" alt="Logo" width="150">
         <h2>SEAGoWhere <br><br> Set Away With Us!</h2>
 </div>
 
