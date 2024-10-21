@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/restricted/api")
+@CrossOrigin("*")
 public class RestrictedController {
 
     @Autowired
