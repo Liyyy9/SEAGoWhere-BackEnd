@@ -92,6 +92,7 @@ public class AuthService {
 
         usersResult.setFirstName(updateRequest.getFirstName());
         usersResult.setLastName(updateRequest.getLastName());
+        usersResult.setNumber(updateRequest.getNumber());
         usersResult.setEmail(updateRequest.getEmail());
 
         if (updateRequest.getPassword() == null || updateRequest.getPassword().isEmpty())
